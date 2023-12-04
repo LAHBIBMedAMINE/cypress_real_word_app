@@ -15,10 +15,14 @@ describe("loginTests",function(){
 
     it("login with valid cridentiel",function(){
         
-        
+        // signin
         SingInPgObj.Login_UI("Katharina_Bernier","s3cret", true)
         homePage_AuthUser.sidenav().should('be.visible')
         SingInPgObj.errorMessage().should('not.exist')
+
+        //sign out
+        homePage_AuthUser.signOut()
+        cy.location("pathname").should("eq", "/signin");
  
     })
 
@@ -27,18 +31,18 @@ describe("loginTests",function(){
         cy.location("pathname").should("equal", "/signin");
       })
 
-    it("login with unvalid cridentiel",function(){
+    it("login with invalid cridentiel",function(){
         SingInPgObj.Login_UI("wrong_user","wrong_password", true)
         homePage_AuthUser.sidenav().should('not.exist')
         SingInPgObj.errorMessage().should('be.visible').and("have.text", "Username or password is invalid")
     })
 
     it("showing textHelper",function(){
+        // userName TextHelper
         SingInPgObj.usernameTxBx().find("#username").clear().blur()
         SingInPgObj.TextHelper_UserName().should('be.visible').and("have.text","Username is required")
-
+        // passwoed TextHelper
         const passwords = ["abc","abcd"]
-
         passwords.forEach(function(password, index, array){
             SingInPgObj.passwordTxBx().find("#password").clear().type(password).blur()
             if (password.length < 4){
@@ -49,7 +53,7 @@ describe("loginTests",function(){
         })
     })
 
-    it.only("Sign in enable/disable",function(){
+    it("Signin bTn enable/disable",function(){
         // check for  user name input only
         SingInPgObj.usernameTxBx().type("Katharina_Bernier")
         SingInPgObj.SignInBtn().should("be.disabled")
@@ -79,35 +83,21 @@ describe("loginTests",function(){
 
     })
 
+    it("verify cookies",function(){
+        SingInPgObj.Login_UI("Katharina_Bernier","s3cret", true)
 
+        // the cookies should have a property of expiry
+        cy.getCookie("connect.sid").should("have.property","expiry");
 
+        //sign out
+        homePage_AuthUser.signOut()
+        cy.location("pathname").should("eq", "/signin");
+    })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    it("should error for an invalid password for existing user", function () {
+        SingInPgObj.Login_UI("Katharina_Bernier","invalid Password", true)
+        SingInPgObj.errorMessage().should("be.visible").and("have.text", "Username or password is invalid")
+      })
 
 
     })
