@@ -16,6 +16,10 @@ sidenav_username(){
     return cy.getBySel("sidenav-username")
 }
 
+sidenav_bankaccounts(){
+    return cy.getBySel("sidenav-bankaccounts")
+}
+
 
 
 

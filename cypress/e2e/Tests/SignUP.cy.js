@@ -104,7 +104,7 @@ describe("testing signUp & login & logout", function(){
         OnboardingPgObj.onboarding_dialog_title().find("h2").contains("Get Started with Real World App")
         OnboardingPgObj.onboarding_nextBtn().click()
         OnboardingPgObj.onboarding_dialog_title().should("contain", "Create Bank Account")
-        OnboardingPgObj.onboarding(user0.BankName,user0.routingNumber,user0.accountNumber)
+        OnboardingPgObj.FillNewBankForm(user0.BankName,user0.routingNumber,user0.accountNumber)
         cy.wait('@CreateBankAccount')
         OnboardingPgObj.onboarding_dialog_title().find("h2").contains("Finished")
         OnboardingPgObj.onboarding_nextBtn().click()

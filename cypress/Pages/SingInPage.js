@@ -31,7 +31,7 @@ class SingInPage
         return cy.getBySel('signin-password').find("#password-helper-text")
     }
 
-    Login_UI(username,passord, rememberUser = false ){
+    Login_UI(username,password, rememberUser = false ){
         const signinPath = Cypress.env("BaseUrl")+"/signin";
 
         // any time we call this function it should be on /singin page
@@ -42,7 +42,7 @@ class SingInPage
         
         //filling the form 
         this.usernameTxBx().type(username)
-        this.passwordTxBx().type(passord)
+        this.passwordTxBx().type(password)
 
         //cookies
         if(rememberUser){
